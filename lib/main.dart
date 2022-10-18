@@ -54,12 +54,14 @@ class MyScaffold extends StatelessWidget {
                 child: ListView(
                   children: [
                     DrawerHeader(
+
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                       ),
-                      child: Text('Drawer Header'),
+                      child: Icon(Icons.account_circle_outlined, size: 128,),
                     ),
                     ListTile(
+                      leading: const Icon(Icons.login),
                       title: const Text('Sign in'),
                       onTap: () {
                         Navigator.of(context).popUntil((route) => route.isFirst);
@@ -67,6 +69,7 @@ class MyScaffold extends StatelessWidget {
                       },
                     ),
                     ListTile(
+                      leading: const Icon(Icons.person_add),
                       title: const Text('Sign up'),
                       onTap: () {
                         Navigator.of(context).popUntil((route) => route.isFirst);
@@ -77,6 +80,7 @@ class MyScaffold extends StatelessWidget {
                 ),
               ),
               ListTile(
+                leading: const Icon(Icons.settings),
                 title: const Text('Settings'),
                 onTap: () {
                   Navigator.of(context).popUntil((route) => route.isFirst);
@@ -84,6 +88,7 @@ class MyScaffold extends StatelessWidget {
                 },
               ),
               ListTile(
+                leading: const Icon(Icons.logout),
                 title: const Text('Log out'),
                 onTap: () {
 
