@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "761887875961",
+    "project_id": "mini-firebase-4037c",
+    "storage_bucket": "mini-firebase-4037c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761887875961:android:c20bb7d5cbde1d7d87c5a8",
+        "android_client_info": {
+          "package_name": "pl.gajdaw.mini.firebase.flutter_firebase_mini"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761887875961-tlbs6g0i584d4bnrk8jmcs8druh9g7r6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi23lkUWjJ5gLVTntubxWciK-SvkqBRkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761887875961-tlbs6g0i584d4bnrk8jmcs8druh9g7r6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

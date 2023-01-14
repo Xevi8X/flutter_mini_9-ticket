@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mini_nine_euro_ticket">
+    package="pl.gajdaw.mini.firebase.flutter_firebase_mini">
    <application
-        android:label="mini_nine_euro_ticket"
+        android:label="flutter_firebase_mini"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

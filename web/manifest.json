@@ -1,6 +1,6 @@
 {
-    "name": "mini_nine_euro_ticket",
-    "short_name": "mini_nine_euro_ticket",
+    "name": "flutter_firebase_mini",
+    "short_name": "flutter_firebase_mini",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

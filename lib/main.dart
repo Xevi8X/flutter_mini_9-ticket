@@ -1,102 +1,47 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_mini/wrapper.dart';
+import 'package:provider/provider.dart';
+import 'firebase_options.dart';
+import 'auth/auth.dart';
 
-void main() {
-  runApp(MainWidget());
+
+final navigatorKey = GlobalKey<NavigatorState>();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(MyApp());
 }
 
-class MainWidget extends StatelessWidget {
-  MainWidget({super.key});
+class MyApp extends StatelessWidget {
 
-  MaterialColor primaryColor = Colors.red;
+  AuthService _authService;
+
+  MyApp({super.key}) : _authService = AuthService()
+  {
+    _authService.signOutIfAnonymous();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Nine Euro Ticket',
-      theme: ThemeData(
-        primarySwatch: primaryColor,
+    return StreamProvider<User?>.value(
+      value: _authService.user,
+      initialData: null,
+      child: MaterialApp(
+        title: '9-Euro-Ticket',
+        theme: ThemeData(
+          primaryColor: Colors.lightGreen,
+          //backgroundColor: Colors.deepPurpleAccent
+        ),
+        home: Wrapper(),
+        navigatorKey: navigatorKey,
       ),
-      initialRoute: '/',
-      routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => MyScaffold(Center(child: Text("/"))),
-        // When navigating to the "/second" route, build the SecondScreen widget.
-        '/login': (context) => MyScaffold(Center(child: Text("/login"))),
-        '/register': (context) => MyScaffold(Center(child: Text("/register"))),
-        '/buy': (context) => MyScaffold(Center(child: Text("/buy"))),
-        '/inspect': (context) => MyScaffold(Center(child: Text("/inspect"))),
-        '/settings': (context) => MyScaffold(Center(child: Text("/settings"))),
-      },
     );
   }
 }
 
-class MyScaffold extends StatelessWidget {
-  MyScaffold(
-    this.content, {
-    Key? key,
-  }) : super(key: key);
-
-  final Widget content;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("Nine Euro Ticket"),
-        ),
-        endDrawer: Drawer(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: ListView(
-                  children: [
-                    DrawerHeader(
-
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      child: Icon(Icons.account_circle_outlined, size: 128,),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.login),
-                      title: const Text('Sign in'),
-                      onTap: () {
-                        Navigator.of(context).popUntil((route) => route.isFirst);
-                        Navigator.of(context).pushNamed('/login');
-                      },
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.person_add),
-                      title: const Text('Sign up'),
-                      onTap: () {
-                        Navigator.of(context).popUntil((route) => route.isFirst);
-                        Navigator.of(context).pushNamed('/register');
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: const Text('Settings'),
-                onTap: () {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.of(context).pushNamed('/settings');
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('Log out'),
-                onTap: () {
-
-                },
-              ),
-            ],
-          ),
-        ),
-        body: content);
-  }
-}
