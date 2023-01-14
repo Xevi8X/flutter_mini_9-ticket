@@ -3,10 +3,12 @@ import 'package:flutter_firebase_mini/cloud/cloud_client.dart';
 import 'package:flutter_firebase_mini/cloud/cloud_user.dart';
 import 'package:flutter_firebase_mini/screens/setting.dart';
 import 'package:flutter_firebase_mini/screens/shop.dart';
+import 'package:flutter_firebase_mini/screens/support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth/auth.dart';
 import '../common.dart';
+import 'license.dart';
 
 class HomeScaffold extends StatefulWidget {
   Color backgroundColor = Colors.lightGreen;
@@ -105,6 +107,25 @@ class _HomeScaffoldState extends State<HomeScaffold> {
                             ],
                           ),
                         ),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.picture_as_pdf_outlined),
+                        title: const Text('License'),
+                        onTap: () {
+
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScaffold(LicenseWebView(),false,user: widget.user,backgroundColor: widget.backgroundColor),));
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.contact_support),
+                        title: const Text('Support'),
+                        onTap: () {
+                          Navigator.of(context)
+                              .popUntil((route) => route.isFirst);
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScaffold(SupportScreen(cloudUser: widget.user!,backgroundColor: widget.backgroundColor),false,user: widget.user,backgroundColor: widget.backgroundColor),));
+                        },
                       ),
                       ListTile(
                         leading: const Icon(Icons.settings),
