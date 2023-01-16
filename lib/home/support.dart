@@ -9,7 +9,6 @@ class SupportScreen extends StatelessWidget {
   CloudUser cloudUser;
   Color backgroundColor;
   TextEditingController textarea = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   SupportScreen(
       {Key? key, required this.cloudUser, required this.backgroundColor})
       : super(key: key);
@@ -21,7 +20,7 @@ class SupportScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 30),
             child: Text(
               "Contact with support",
               style: Theme.of(context).textTheme.headline5,
@@ -42,7 +41,7 @@ class SupportScreen extends StatelessWidget {
                       maxLines: 10,
                       decoration: InputDecoration(
                           hintText: "What's happen?",
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                               borderSide: BorderSide(width: 1, color: Colors.black)
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -52,7 +51,7 @@ class SupportScreen extends StatelessWidget {
 
                     ),
                   ),
-                  Text("Limit 1000 characters!"),
+                  const Text("Limit 1000 characters!"),
 
                   Padding(
                     padding: const EdgeInsets.all(20.0),

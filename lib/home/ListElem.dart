@@ -1,11 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_mini/auth/auth.dart';
 import 'package:flutter_firebase_mini/cloud/cloud_client.dart';
 import 'package:flutter_firebase_mini/cloud/cloud_ticket.dart';
-import 'package:flutter_firebase_mini/cloud/cloud_user.dart';
-import 'package:flutter_firebase_mini/screens/HomeScaffold.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_firebase_mini/home/HomeScaffold.dart';
 
 import '../common.dart';
 import 'inspection.dart';
@@ -27,11 +24,11 @@ class _ListElemState extends State<ListElem> {
     String validity = "";
     if(widget.cloudTicket.from != null && widget.cloudTicket.to != null)
     {
-      validity =  Common.fromDateTime(widget.cloudTicket.from!) + " - " + Common.fromDateTime(widget.cloudTicket.to!);
+      validity =  "${Common.fromDateTime(widget.cloudTicket.from!)} - ${Common.fromDateTime(widget.cloudTicket.to!)}";
     }
 
     return Card(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
             side: const BorderSide(width: 1, color: Colors.black)
@@ -73,7 +70,7 @@ class _ListElemState extends State<ListElem> {
 
   openInspectionScreen(BuildContext context, CloudTicket cloudTicket) async {
     final u = AuthService().currentUser();
-    var user = await CloudService().readUser(u!.isAnonymous ? "1" :u!.uid);
+    var user = await CloudService().readUser(u!.isAnonymous ? "1" :u.uid);
 
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScaffold(InspectionScreen(cloudUser: user, cloudTicket: cloudTicket),false,user: user,backgroundColor: widget.backgroundColor,)));
   }

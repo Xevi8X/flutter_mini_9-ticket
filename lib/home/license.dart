@@ -15,14 +15,12 @@ class LicenseWebView extends StatelessWidget {
        Navigator.of(context).pop();
         return Container();
      }
-    var url = 'https://docs.google.com/gview?embedded=true&url=${fileUrl}';
+    var url = 'https://docs.google.com/gview?embedded=true&url=$fileUrl';
     WebViewController controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(
         Uri.parse(url),
       );
-    return Container(
-        child: WebViewWidget(controller: controller)
-    );
+    return WebViewWidget(controller: controller);
   }
 }

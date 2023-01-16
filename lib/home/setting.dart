@@ -34,11 +34,11 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.isLoading? Center(child: CircularProgressIndicator(),) : Padding(
+    return widget.isLoading? const Center(child: CircularProgressIndicator(),) : Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(children: [
         Container(
-          margin: EdgeInsets.only(top: 30),
+          margin: const EdgeInsets.only(top: 30),
           child: Text("Setting:",
             style: Theme
                 .of(context)
@@ -46,7 +46,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 .headline3,
           ),
         ),
-        Spacer(),
+        const Spacer(),
         Form(
           key: _formKey,
           child:Column(
@@ -63,7 +63,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         setState(() => name = val);
                       },
                       validator: (value) =>
-                          (value ?? "").length < 1 ? "Name to short!" : null),
+                          (value ?? "").isEmpty ? "Name to short!" : null),
                 ),
                 Text("surname:",style: Theme.of(context).textTheme.headline6),
                 Padding(
@@ -76,7 +76,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         setState(() => surname = val);
                       },
                       validator: (value) =>
-                          (value ?? "").length < 1 ? "Surname to short!" : null),
+                          (value ?? "").isEmpty ? "Surname to short!" : null),
                 ),
                 ElevatedButton(
                     style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(widget.backgroundColor)),
@@ -132,7 +132,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
 
         ),
-        Spacer(),
+        const Spacer(),
       ]),
     );
   }
@@ -142,7 +142,7 @@ class _SettingScreenState extends State<SettingScreen> {
       setState(() {widget.isLoading = true;});
       await CloudService().updateUser(CloudUser(
           AuthService().currentUser()!.uid,
-          name: name!,
+          name: name,
           surname: surname!));
       setState(() {widget.isLoading = false;});
       Navigator.of(context)

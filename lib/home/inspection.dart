@@ -202,13 +202,10 @@ class _InspectionScreenState extends State<InspectionScreen> with SingleTickerPr
           ),
           SizedBox(
             height: 50,
-            child: Container(
-              child: SlideTransition(
-                position: _offsetAnimation,
+            child: SlideTransition(
+              position: _offsetAnimation,
 
-                child: Icon(Icons.directions_bus_sharp,color: Colors.green,size: 40,),
-              ),
-
+              child: Icon(Icons.directions_bus_sharp,color: Colors.green,size: 40,),
             ),
           )
         ]

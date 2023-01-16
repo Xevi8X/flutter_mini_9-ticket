@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_mini/cloud/cloud_user.dart';
-import 'package:flutter_firebase_mini/screens/shop_elem.dart';
+import 'package:flutter_firebase_mini/home/shop_elem.dart';
 import 'package:provider/provider.dart';
 
 import '../auth/auth.dart';
 import '../cloud/cloud_client.dart';
 import '../cloud/cloud_ticket.dart';
-import 'ListElem.dart';
 
 
 class ShopList extends StatefulWidget {
@@ -35,14 +34,12 @@ class _ShopListState extends State<ShopList> {
   @override
   Widget build(BuildContext context) {
     widget.reloadMyself = reload;
-    final u = Provider.of<User?>(context);
-    final cu = Provider.of<CloudUser?>(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 30),
             child: Text("Shop",
               style: Theme
                   .of(context)
@@ -54,7 +51,7 @@ class _ShopListState extends State<ShopList> {
             child: FractionallySizedBox(
               widthFactor: 1.0,
               child: Container(
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   border: Border.all(color: Colors.black),
@@ -67,7 +64,7 @@ class _ShopListState extends State<ShopList> {
                           onRefresh: () async {
                             reload();
                           },
-                          child: ticketList.length > 0
+                          child: ticketList.isNotEmpty
                               ? ListView.builder(
                             itemCount: ticketList.length,
 
@@ -85,7 +82,7 @@ class _ShopListState extends State<ShopList> {
                                     .of(context)
                                     .textTheme
                                     .headline6, ),
-                                Icon(Icons.south,size: 50,)
+                                const Icon(Icons.south,size: 50,)
 
                               ],
                             ),
@@ -108,7 +105,7 @@ class _ShopListState extends State<ShopList> {
     var userTickets = await widget._cloudService.readTickets(u!.uid);
     var newTicketList = await widget._cloudService.readShop();
     newTicketList.sort((a,b) => a.from!.microsecondsSinceEpoch - b.from!.microsecondsSinceEpoch);
-    if(userTickets.length > 0) newTicketList.forEach((element) {element.isBought = userTickets.any((element2) => element2.name == element.name);});
+    if(userTickets.isNotEmpty) for (var element in newTicketList) {element.isBought = userTickets.any((element2) => element2.name == element.name);}
     setState(() {
       ticketList = newTicketList;
     });
@@ -117,9 +114,9 @@ class _ShopListState extends State<ShopList> {
   Future<void> _initTicket() async {
 
     final u = AuthService().currentUser();
-    var userTickets = await widget._cloudService.readTickets(u!.isAnonymous? "1" : u!.uid);
+    var userTickets = await widget._cloudService.readTickets(u!.isAnonymous? "1" : u.uid);
     ticketList = await widget._cloudService.readShop();
     ticketList.sort((a,b) => a.from!.microsecondsSinceEpoch - b.from!.microsecondsSinceEpoch);
-    if(userTickets.length > 0) ticketList.forEach((element) {element.isBought = userTickets.any((element2) => element2.name == element.name);});
+    if(userTickets.isNotEmpty) for (var element in ticketList) {element.isBought = userTickets.any((element2) => element2.name == element.name);}
   }
 }

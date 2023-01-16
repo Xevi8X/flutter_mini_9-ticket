@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_mini/cloud/cloud_client.dart';
 import 'package:flutter_firebase_mini/cloud/cloud_user.dart';
-import 'package:flutter_firebase_mini/screens/setting.dart';
-import 'package:flutter_firebase_mini/screens/shop.dart';
-import 'package:flutter_firebase_mini/screens/support.dart';
+import 'package:flutter_firebase_mini/home/setting.dart';
+import 'package:flutter_firebase_mini/home/shop.dart';
+import 'package:flutter_firebase_mini/home/support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth/auth.dart';
@@ -28,7 +28,7 @@ class HomeScaffold extends StatefulWidget {
 }
 
 class _HomeScaffoldState extends State<HomeScaffold> {
-  AuthService _authService = AuthService();
+  final AuthService _authService = AuthService();
 
   Future<void>? _initUser;
 
@@ -41,7 +41,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
 
   Future<void> rebuild() async {
     final prefs = await SharedPreferences.getInstance();
-    int? newColor = await prefs.getInt("color");
+    int? newColor = prefs.getInt("color");
     if(newColor != null) widget.backgroundColor = Color(newColor);
     widget.user = await CloudService().readUser(
         _authService.currentUser()!.isAnonymous
@@ -52,7 +52,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
 
   Future<void> _init() async {
     final prefs = await SharedPreferences.getInstance();
-    int? newColor = await prefs.getInt("color");
+    int? newColor = prefs.getInt("color");
     if(newColor != null) widget.backgroundColor = Color(newColor);
     widget.user = await CloudService().readUser(
         _authService.currentUser()!.isAnonymous
@@ -94,10 +94,8 @@ class _HomeScaffoldState extends State<HomeScaffold> {
                                         child: Center(
                                           child: Text(widget.user == null
                                               ? ""
-                                              : (widget.user!.name ?? "") +
-                                                  " " +
-                                                  (widget.user!.surname ?? ""),
-                                          style:TextStyle(fontSize: 22)),
+                                              : "${widget.user!.name ?? ""} ${widget.user!.surname ?? ""}",
+                                          style:const TextStyle(fontSize: 22)),
                                         ),
                                       ),
                                     ],
@@ -115,7 +113,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
 
                           Navigator.of(context)
                               .popUntil((route) => route.isFirst);
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScaffold(LicenseWebView(),false,user: widget.user,backgroundColor: widget.backgroundColor),));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScaffold(const LicenseWebView(),false,user: widget.user,backgroundColor: widget.backgroundColor),));
                         },
                       ),
                       ListTile(
@@ -174,7 +172,7 @@ class _HomeScaffoldState extends State<HomeScaffold> {
                             .then((value) => setState(() {
                             }));
                       },
-                      label: Icon(
+                      label: const Icon(
                         Icons.shopping_cart,
                         size: 40,
                       )),
@@ -212,7 +210,7 @@ class _UpdateNameState extends State<UpdateName> {
         : Center(
             child: Container(
 
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: SafeArea(
                 child: Form(
                   key: _formKey,
@@ -229,7 +227,7 @@ class _UpdateNameState extends State<UpdateName> {
                                 setState(() => name = val);
                               },
                               validator: (value) =>
-                                  (value ?? "").length < 1 ? "Name to short!" : null),
+                                  (value ?? "").isEmpty ? "Name to short!" : null),
                         ),
                         Padding(
                           padding: const EdgeInsets.only( bottom: 8.0),
@@ -239,7 +237,7 @@ class _UpdateNameState extends State<UpdateName> {
                               onChanged: (val) {
                                 setState(() => surname = val);
                               },
-                              validator: (value) => (value ?? "").length < 1
+                              validator: (value) => (value ?? "").isEmpty
                                   ? "Surname to short!"
                                   : null),
                         ),

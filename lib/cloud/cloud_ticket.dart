@@ -35,24 +35,26 @@ class CloudTicket
 
   @override
   bool operator ==(Object other) {
-    return this.id == (other as CloudTicket).id;
+    return id == (other as CloudTicket).id;
   }
 
   Map<String, Object?> toJson() {
     Map<String, Object?> json= {};
     json["id"] = getRandomString(15);
-    json["from"] = Timestamp.fromDate(this.from!);
-    json["to"] = Timestamp.fromDate(this.to!);
+    json["from"] = Timestamp.fromDate(from!);
+    json["to"] = Timestamp.fromDate(to!);
     return json;
   }
 
 
-  Random _rnd = Random();
+  final Random _rnd = Random();
 
   String getRandomString(int length)
   {
-    const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
     return String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+      length, (_) => chars.codeUnitAt(_rnd.nextInt(chars.length))));
   }
+
+
 }

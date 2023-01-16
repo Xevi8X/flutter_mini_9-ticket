@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_mini/auth/auth.dart';
 import 'package:flutter_firebase_mini/cloud/cloud_ticket.dart';
-import 'package:flutter_firebase_mini/screens/ListElem.dart';
+import 'package:flutter_firebase_mini/home/ListElem.dart';
 import 'package:provider/provider.dart';
 
 import '../cloud/cloud_client.dart';
@@ -31,13 +31,13 @@ class _TicketListState extends State<TicketList> {
   @override
   Widget build(BuildContext context) {
     final u = Provider.of<User?>(context);
-    widget._cloudService.addTicketSubsriber(u!.uid, () => reload(u!));
+    widget._cloudService.addTicketSubsriber(u!.uid, () => reload(u));
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 30),
             child: Text("Your tickets:",
               style: Theme
                 .of(context)
@@ -49,7 +49,7 @@ class _TicketListState extends State<TicketList> {
             child: FractionallySizedBox(
               widthFactor: 1.0,
               child: Container(
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   border: Border.all(color: Colors.black),
@@ -62,7 +62,7 @@ class _TicketListState extends State<TicketList> {
                         onRefresh: () async {
                           reload(u);
                         },
-                        child: ticketList.length > 0
+                        child: ticketList.isNotEmpty
                             ? ListView.builder(
                           itemCount: ticketList.length,
 
@@ -80,7 +80,7 @@ class _TicketListState extends State<TicketList> {
                                   .of(context)
                                   .textTheme
                                   .headline6, ),
-                              Icon(Icons.south,size: 50,)
+                              const Icon(Icons.south,size: 50,)
                               
                             ],
                           ),
@@ -100,7 +100,7 @@ class _TicketListState extends State<TicketList> {
 
   void reload(User? u) async
   {
-    var newTicketList = await widget._cloudService.readTickets(u!.isAnonymous? "1" : u!.uid);
+    var newTicketList = await widget._cloudService.readTickets(u!.isAnonymous? "1" : u.uid);
     newTicketList.sort((a,b) => a.from!.microsecondsSinceEpoch - b.from!.microsecondsSinceEpoch);
     setState(() {
       ticketList = newTicketList;
@@ -110,7 +110,7 @@ class _TicketListState extends State<TicketList> {
   Future<void> _initTicket() async {
 
     final u = AuthService().currentUser();
-    ticketList = await widget._cloudService.readTickets(u!.isAnonymous? "1" : u!.uid);
+    ticketList = await widget._cloudService.readTickets(u!.isAnonymous? "1" : u.uid);
     ticketList.sort((a,b) => a.from!.microsecondsSinceEpoch - b.from!.microsecondsSinceEpoch);
   }
 }

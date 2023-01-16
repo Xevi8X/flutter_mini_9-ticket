@@ -20,7 +20,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
 
-  AuthService _authService;
+  final AuthService _authService;
 
   MyApp({super.key}) : _authService = AuthService()
   {
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.lightGreen,
           //backgroundColor: Colors.deepPurpleAccent
         ),
-        home: Wrapper(),
+        home: const Wrapper(),
         navigatorKey: navigatorKey,
       ),
     );

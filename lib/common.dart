@@ -29,10 +29,10 @@ class Common
       hintText: hint,
       fillColor: Colors.white,
       filled: true,
-      enabledBorder: OutlineInputBorder(
+      enabledBorder: const OutlineInputBorder(
         borderSide:  BorderSide(color: Colors.white, width: 2.0),
       ),
-      focusedBorder: OutlineInputBorder(
+      focusedBorder: const OutlineInputBorder(
         borderSide: BorderSide(color: Colors.blue, width: 2.0),
       )
     );
@@ -43,6 +43,6 @@ class Common
   static String fromDateTime(DateTime? d)
   {
     if(d == null) "Unknown";
-    return "${d!.day.toString()}.${d!.month.toString()}.${d!.year.toString()}";
+    return "${d!.day.toString()}.${d.month.toString()}.${d.year.toString()}";
   }
 }
